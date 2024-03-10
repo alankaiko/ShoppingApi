@@ -8,6 +8,6 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class AbstractDTO implements Serializable {
-    private int pagina;
-    private int itensPorPagina;
+    private int page;
+    private int itensForPage;
 }

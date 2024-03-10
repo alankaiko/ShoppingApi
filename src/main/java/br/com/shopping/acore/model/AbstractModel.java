@@ -17,8 +17,8 @@ import java.time.LocalDate;
 public abstract class AbstractModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo;
+    private Long id;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate datacadastro;
+    private LocalDate dateRegistry;
 }
