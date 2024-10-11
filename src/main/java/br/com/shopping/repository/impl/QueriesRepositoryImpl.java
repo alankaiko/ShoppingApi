@@ -1,7 +1,9 @@
 package br.com.shopping.repository.impl;
 
 import br.com.shopping.acore.repository.impl.AbstractRepositoryImpl;
+import br.com.shopping.model.Product_;
 import br.com.shopping.model.Queries;
+import br.com.shopping.model.Queries_;
 import br.com.shopping.model.dto.QueriesDTO;
 import br.com.shopping.repository.QueriesRepository;
 import org.springframework.data.domain.Page;
@@ -9,6 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -47,6 +50,9 @@ public class QueriesRepositoryImpl extends AbstractRepositoryImpl<Queries, Queri
 
     private Predicate[] addRestrictions(CriteriaBuilder builder, QueriesDTO queriesDTO, Root<Queries> root) {
         List<Predicate> lista = new ArrayList<>();
+
+        if (!StringUtils.isEmpty(queriesDTO.getEmail()))
+            lista.add(builder.like(builder.lower(root.get(Queries_.EMAIL)), "%" + queriesDTO.getEmail().toLowerCase() + "%"));
 
         return lista.toArray(new Predicate[lista.size()]);
     }

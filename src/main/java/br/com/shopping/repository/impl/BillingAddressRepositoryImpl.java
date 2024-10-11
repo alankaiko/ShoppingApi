@@ -2,6 +2,7 @@ package br.com.shopping.repository.impl;
 
 import br.com.shopping.acore.repository.impl.AbstractRepositoryImpl;
 import br.com.shopping.model.BillingAddress;
+import br.com.shopping.model.BillingAddress_;
 import br.com.shopping.model.dto.BillingAddressDTO;
 import br.com.shopping.repository.BillingAddressRepository;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -47,6 +49,9 @@ public class BillingAddressRepositoryImpl extends AbstractRepositoryImpl<Billing
 
     private Predicate[] addRestrictions(CriteriaBuilder builder, BillingAddressDTO billingAddressDTO, Root<BillingAddress> root) {
         List<Predicate> lista = new ArrayList<>();
+
+        if (!StringUtils.isEmpty(billingAddressDTO.getAddress()))
+            lista.add(builder.like(builder.lower(root.get(BillingAddress_.ADDRESS)), "%" + billingAddressDTO.getAddress().toLowerCase() + "%"));
 
         return lista.toArray(new Predicate[lista.size()]);
     }

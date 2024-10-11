@@ -24,7 +24,7 @@ public class CustomerController extends AbstractController<Customer, CustomerDTO
     }
 
     @GetMapping(params = "resumo")
-    public Page<Customer> Resumir(CustomerDTO customerDTO, Pageable page) {
+    public Page<Customer> resumir(CustomerDTO customerDTO, Pageable page) {
         return this.customerService.filtering(customerDTO, page);
     }
 

@@ -24,7 +24,7 @@ public class ShippingAddressController extends AbstractController<ShippingAddres
     }
 
     @GetMapping(params = "resumo")
-    public Page<ShippingAddress> Resumir(ShippingAddressDTO shippingAddressDTO, Pageable page) {
+    public Page<ShippingAddress> resumir(ShippingAddressDTO shippingAddressDTO, Pageable page) {
         return this.shippingAddressService.filtering(shippingAddressDTO, page);
     }
 

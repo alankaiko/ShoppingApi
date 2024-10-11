@@ -2,6 +2,7 @@ package br.com.shopping.repository.impl;
 
 import br.com.shopping.acore.repository.impl.AbstractRepositoryImpl;
 import br.com.shopping.model.Product;
+import br.com.shopping.model.Product_;
 import br.com.shopping.model.dto.ProductDTO;
 import br.com.shopping.repository.ProductRepository;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -47,6 +49,12 @@ public class ProductRepositoryImpl extends AbstractRepositoryImpl<Product, Produ
 
     private Predicate[] addRestrictions(CriteriaBuilder builder, ProductDTO productDTO, Root<Product> root) {
         List<Predicate> lista = new ArrayList<>();
+
+        if (!StringUtils.isEmpty(productDTO.getName()))
+            lista.add(builder.like(builder.lower(root.get(Product_.NAME)), "%" + productDTO.getName().toLowerCase() + "%"));
+
+        if (!StringUtils.isEmpty(productDTO.getCategory()))
+            lista.add(builder.like(builder.lower(root.get(Product_.CATEGORY)), "%" + productDTO.getCategory().toLowerCase() + "%"));
 
         return lista.toArray(new Predicate[lista.size()]);
     }

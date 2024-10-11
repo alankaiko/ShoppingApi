@@ -24,7 +24,7 @@ public class ProductController extends AbstractController<Product, ProductDTO> {
     }
 
     @GetMapping(params = "resumo")
-    public Page<Product> Resumir(ProductDTO productDTO, Pageable page) {
+    public Page<Product> resumir(ProductDTO productDTO, Pageable page) {
         return this.productService.filtering(productDTO, page);
     }
 

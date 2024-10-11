@@ -24,7 +24,7 @@ public class UserSystemController extends AbstractController<UserSystem, UserSys
     }
 
     @GetMapping(params = "resumo")
-    public Page<UserSystem> Resumir(UserSystemDTO userSystemDTO, Pageable page) {
+    public Page<UserSystem> resumir(UserSystemDTO userSystemDTO, Pageable page) {
         return this.userSystemService.filtering(userSystemDTO, page);
     }
 

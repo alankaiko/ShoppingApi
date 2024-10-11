@@ -7,4 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class QueriesDTO extends AbstractDTO {
+    private String email;
 }

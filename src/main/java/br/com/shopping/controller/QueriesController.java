@@ -24,7 +24,7 @@ public class QueriesController extends AbstractController<Queries, QueriesDTO> {
     }
 
     @GetMapping(params = "resumo")
-    public Page<Queries> Resumir(QueriesDTO queriesDTO, Pageable page) {
+    public Page<Queries> resumir(QueriesDTO queriesDTO, Pageable page) {
         return this.queriesService.filtering(queriesDTO, page);
     }
 

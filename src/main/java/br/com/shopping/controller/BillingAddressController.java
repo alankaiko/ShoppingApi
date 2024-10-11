@@ -24,7 +24,7 @@ public class BillingAddressController extends AbstractController<BillingAddress,
     }
 
     @GetMapping(params = "resumo")
-    public Page<BillingAddress> Resumir(BillingAddressDTO billingAddressDTO, Pageable page) {
+    public Page<BillingAddress> resumir(BillingAddressDTO billingAddressDTO, Pageable page) {
         return this.billingAddressService.filtering(billingAddressDTO, page);
     }
 

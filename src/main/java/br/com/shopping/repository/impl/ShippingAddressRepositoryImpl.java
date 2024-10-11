@@ -1,7 +1,9 @@
 package br.com.shopping.repository.impl;
 
 import br.com.shopping.acore.repository.impl.AbstractRepositoryImpl;
+import br.com.shopping.model.Product_;
 import br.com.shopping.model.ShippingAddress;
+import br.com.shopping.model.ShippingAddress_;
 import br.com.shopping.model.dto.ShippingAddressDTO;
 import br.com.shopping.repository.ShippingAddressRepository;
 import org.springframework.data.domain.Page;
@@ -9,6 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -47,6 +50,9 @@ public class ShippingAddressRepositoryImpl extends AbstractRepositoryImpl<Shippi
 
     private Predicate[] addRestrictions(CriteriaBuilder builder, ShippingAddressDTO shippingAddressDTO, Root<ShippingAddress> root) {
         List<Predicate> lista = new ArrayList<>();
+
+        if (!StringUtils.isEmpty(shippingAddressDTO.getState()))
+            lista.add(builder.like(builder.lower(root.get(ShippingAddress_.STATE)), "%" + shippingAddressDTO.getState().toLowerCase() + "%"));
 
         return lista.toArray(new Predicate[lista.size()]);
     }

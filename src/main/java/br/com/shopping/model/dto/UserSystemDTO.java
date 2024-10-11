@@ -7,4 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserSystemDTO extends AbstractDTO {
+    private String emailId;
 }

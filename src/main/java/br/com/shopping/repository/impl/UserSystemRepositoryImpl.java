@@ -1,6 +1,7 @@
 package br.com.shopping.repository.impl;
 
 import br.com.shopping.acore.repository.impl.AbstractRepositoryImpl;
+import br.com.shopping.model.Product_;
 import br.com.shopping.model.UserSystem;
 import br.com.shopping.model.dto.UserSystemDTO;
 import br.com.shopping.repository.UserSystemRepository;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -47,6 +49,9 @@ public class UserSystemRepositoryImpl extends AbstractRepositoryImpl<UserSystem,
 
     private Predicate[] addRestrictions(CriteriaBuilder builder, UserSystemDTO userSystemDTO, Root<UserSystem> root) {
         List<Predicate> lista = new ArrayList<>();
+
+        if (!StringUtils.isEmpty(userSystemDTO.getEmailId()))
+            lista.add(builder.like(builder.lower(root.get(Product_.NAME)), "%" + userSystemDTO.getEmailId().toLowerCase() + "%"));
 
         return lista.toArray(new Predicate[lista.size()]);
     }

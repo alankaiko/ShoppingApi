@@ -24,7 +24,7 @@ public class CartController extends AbstractController<Cart, CartDTO> {
     }
 
     @GetMapping(params = "resumo")
-    public Page<Cart> Resumir(CartDTO cartDTO, Pageable page) {
+    public Page<Cart> resumir(CartDTO cartDTO, Pageable page) {
         return this.cartService.filtering(cartDTO, page);
     }
 

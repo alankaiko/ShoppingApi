@@ -2,6 +2,9 @@ package br.com.shopping.repository.impl;
 
 import br.com.shopping.acore.repository.impl.AbstractRepositoryImpl;
 import br.com.shopping.model.CartItem;
+import br.com.shopping.model.CartItem_;
+import br.com.shopping.model.Product;
+import br.com.shopping.model.Product_;
 import br.com.shopping.model.dto.CartItemDTO;
 import br.com.shopping.repository.CartItemRepository;
 import org.springframework.data.domain.Page;
@@ -9,13 +12,11 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +48,13 @@ public class CartItemRepositoryImpl extends AbstractRepositoryImpl<CartItem, Car
 
     private Predicate[] addRestrictions(CriteriaBuilder builder, CartItemDTO cartItemDTO, Root<CartItem> root) {
         List<Predicate> lista = new ArrayList<>();
+        Join<CartItem, Product> cartItemProductJoin = root.join(CartItem_.PRODUCT);
+
+        if (!StringUtils.isEmpty(cartItemDTO.getNameProduct()))
+            lista.add(builder.like(builder.lower(cartItemProductJoin.get(Product_.NAME)), "%" + cartItemDTO.getNameProduct().toLowerCase() + "%"));
+
+        if (!StringUtils.isEmpty(cartItemDTO.getCategoryProduct()))
+            lista.add(builder.like(builder.lower(cartItemProductJoin.get(Product_.CATEGORY)), "%" + cartItemDTO.getCategoryProduct().toLowerCase() + "%"));
 
         return lista.toArray(new Predicate[lista.size()]);
     }

@@ -24,7 +24,7 @@ public class AuthoritiesController extends AbstractController<Authorities, Autho
     }
 
     @GetMapping(params = "resumo")
-    public Page<Authorities> Resumir(AuthoritiesDTO authoritiesDTO, Pageable page) {
+    public Page<Authorities> resumir(AuthoritiesDTO authoritiesDTO, Pageable page) {
         return this.authoritiesService.filtering(authoritiesDTO, page);
     }
 

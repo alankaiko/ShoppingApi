@@ -7,4 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BillingAddressDTO extends AbstractDTO {
+    private String address;
 }

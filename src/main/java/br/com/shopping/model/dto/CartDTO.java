@@ -7,4 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CartDTO extends AbstractDTO {
+    private String firstNameCustomer;
 }

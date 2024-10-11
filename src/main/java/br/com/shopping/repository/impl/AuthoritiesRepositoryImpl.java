@@ -2,6 +2,7 @@ package br.com.shopping.repository.impl;
 
 import br.com.shopping.acore.repository.impl.AbstractRepositoryImpl;
 import br.com.shopping.model.Authorities;
+import br.com.shopping.model.Authorities_;
 import br.com.shopping.model.dto.AuthoritiesDTO;
 import br.com.shopping.repository.AuthoritiesRepository;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -47,6 +49,9 @@ public class AuthoritiesRepositoryImpl extends AbstractRepositoryImpl<Authoritie
 
     private Predicate[] addRestrictions(CriteriaBuilder builder, AuthoritiesDTO authoritiesDTO, Root<Authorities> root) {
         List<Predicate> lista = new ArrayList<>();
+
+        if (!StringUtils.isEmpty(authoritiesDTO.getEmailId()))
+            lista.add(builder.like(builder.lower(root.get(Authorities_.EMAIL_ID)), "%" + authoritiesDTO.getEmailId().toLowerCase() + "%"));
 
         return lista.toArray(new Predicate[lista.size()]);
     }

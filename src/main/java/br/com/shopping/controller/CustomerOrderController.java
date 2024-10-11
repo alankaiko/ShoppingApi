@@ -24,7 +24,7 @@ public class CustomerOrderController extends AbstractController<CustomerOrder, C
     }
 
     @GetMapping(params = "resumo")
-    public Page<CustomerOrder> Resumir(CustomerOrderDTO customerOrderDTO, Pageable page) {
+    public Page<CustomerOrder> resumir(CustomerOrderDTO customerOrderDTO, Pageable page) {
         return this.customerOrderService.filtering(customerOrderDTO, page);
     }
 
